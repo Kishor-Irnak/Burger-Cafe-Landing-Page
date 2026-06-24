@@ -49,12 +49,37 @@ gtag('config', 'G-2M6V79H761');
             The Burgers
           </a>
 
-          <button aria-label="Menu" class="inline-flex items-center justify-center p-2 rounded-full hover:bg-zinc-100 transition-colors text-zinc-700 md:hidden">
+          <button id="mobile-menu-btn" aria-label="Menu" class="inline-flex items-center justify-center p-2 rounded-full hover:bg-zinc-100 transition-colors text-zinc-700 md:hidden">
             <iconify-icon icon="solar:hamburger-menu-linear" style="stroke-width: 1.5;"></iconify-icon>
           </button>
         </div>
       </div>
     </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu-overlay" class="fixed inset-0 bg-black/40 z-50 opacity-0 pointer-events-none transition-opacity duration-300"></div>
+
+    <!-- Mobile Menu Panel -->
+    <div id="mobile-menu" class="fixed top-0 right-0 bottom-0 w-80 max-w-[80vw] bg-[#F4EBE1] z-50 translate-x-full transition-transform duration-300 ease-in-out shadow-2xl flex flex-col p-6">
+      <div class="flex justify-between items-center mb-8">
+        <span class="uppercase text-3xl text-[#f91814]" style="font-family: 'Modak', system-ui;">
+          CRAV
+        </span>
+        <button id="mobile-menu-close" aria-label="Close menu" class="p-2 rounded-full hover:bg-zinc-200 transition-colors text-zinc-700">
+          <iconify-icon icon="solar:close-circle-linear" class="text-2xl"></iconify-icon>
+        </button>
+      </div>
+      <div class="flex flex-col gap-6 text-base font-semibold uppercase tracking-wider text-zinc-700">
+        <a href="/" class="mobile-nav-link hover:text-[#f91814] transition-colors">Home</a>
+        <a href="#about" class="mobile-nav-link hover:text-[#f91814] transition-colors">About Us</a>
+        <a href="#ingredients" class="mobile-nav-link hover:text-[#f91814] transition-colors">Ingredients</a>
+        <a href="#locations" class="mobile-nav-link hover:text-[#f91814] transition-colors">Locations</a>
+        <hr class="border-zinc-300/60 my-2">
+        <a href="/menu" class="inline-flex items-center justify-center text-sm uppercase tracking-tight font-medium text-white bg-[#f91814] hover:bg-red-700 px-5 py-3 rounded-full transition-all shadow-sm">
+          The Burgers
+        </a>
+      </div>
+    </div>
 
     <!-- Hero Section -->
     <section class="relative pt-32 pb-20 md:pt-40 md:pb-32 flex flex-col items-center text-center px-6 overflow-hidden">
@@ -417,5 +442,36 @@ gtag('config', 'G-2M6V79H761');
         </div>
       </div>
     </footer>
-  
+
+    <!-- Mobile Menu Controller Script -->
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const closeBtn = document.getElementById('mobile-menu-close');
+        const overlay = document.getElementById('mobile-menu-overlay');
+        const menu = document.getElementById('mobile-menu');
+        const navLinks = document.querySelectorAll('.mobile-nav-link');
+
+        function openMenu() {
+          menu.classList.remove('translate-x-full');
+          overlay.classList.remove('opacity-0', 'pointer-events-none');
+          document.body.classList.add('overflow-hidden');
+        }
+
+        function closeMenu() {
+          menu.classList.add('translate-x-full');
+          overlay.classList.add('opacity-0', 'pointer-events-none');
+          document.body.classList.remove('overflow-hidden');
+        }
+
+        if (menuBtn && closeBtn && overlay && menu) {
+          menuBtn.addEventListener('click', openMenu);
+          closeBtn.addEventListener('click', closeMenu);
+          overlay.addEventListener('click', closeMenu);
+          navLinks.forEach(link => {
+            link.addEventListener('click', closeMenu);
+          });
+        }
+      });
+    </script>
 </body></html>
